@@ -23,14 +23,18 @@ const MyCamera: React.FC<{}> = () => {
 
   const onCapture = async () => {
     if (cameraRef) {
-      let photo = await cameraRef.current?.takePictureAsync();
+      let photo = await cameraRef.current?.takePictureAsync({
+        quality: 0,
+        base64: true,
+      });
       setPhoto(photo);
     }
   };
-  const onSave = () => {
+
+  const onSave = async () => {
     console.log(photo);
-    setPhoto(null);
   };
+
   const onBack = () => {
     setPhoto(null);
   };
@@ -66,8 +70,16 @@ const MyCamera: React.FC<{}> = () => {
       </View>
     );
   }
+
   return (
-    <Camera style={{ flex: 1 }} type="back" ref={cameraRef}>
+    <Camera
+      style={{ flex: 1 }}
+      type="back"
+      autoFocus
+      flashMode="auto"
+      ref={cameraRef}
+      ratio="16:9"
+    >
       <View
         style={{
           flex: 1,
