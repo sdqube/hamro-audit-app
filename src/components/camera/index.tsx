@@ -4,7 +4,7 @@ import * as Permissions from 'expo-permissions';
 import { FontAwesome } from '@expo/vector-icons';
 import { View, TouchableOpacity, Image } from 'react-native';
 
-import { b64toBlob } from './utils/utils';
+import { b64toBlob } from '../../utils/utils';
 
 const MyCamera: React.FC<{}> = () => {
   const cameraRef = useRef<Camera | null>(null);

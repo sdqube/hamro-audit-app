@@ -1,13 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { configure } from 'mobx';
+import 'react-native-gesture-handler';
 import { StyleSheet, Text, View } from 'react-native';
-import MyCamera from './src/camera';
+import { NavigationContainer } from '@react-navigation/native';
+import 'mobx-react-lite/batchingForReactNative';
+
+import Main from './src/container';
+import store, { StoreContext } from './src/store';
+
+configure({ enforceActions: 'observed' });
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <MyCamera />
-    </View>
+    <StoreContext.Provider value={store}>
+      <NavigationContainer>
+        <Main />
+      </NavigationContainer>
+    </StoreContext.Provider>
   );
 }
 
