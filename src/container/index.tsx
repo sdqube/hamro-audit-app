@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './login';
 import { StoreContext } from '../store';
 import Home from './home';
+import Camera from '../components/camera';
 
 const Stack = createStackNavigator();
 
@@ -14,8 +15,13 @@ const Main: React.FC<{}> = () => {
     return <Login />;
   }
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ title: 'Dashboard' }}
+      />
+      <Stack.Screen name="Camera" component={Camera} options={{ title: '' }} />
     </Stack.Navigator>
   );
 };
