@@ -6,6 +6,11 @@ class AuthStore {
 
   @observable
   isLoading: boolean = true;
+
+  @action
+  login() {
+    this.isAuthenticated = true;
+  }
 }
 
 export default new AuthStore();
