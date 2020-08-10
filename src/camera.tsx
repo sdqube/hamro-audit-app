@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
-import {
-  FontAwesome,
-  Ionicons,
-  MaterialCommunityIcons,
-} from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { View, TouchableOpacity, Image } from 'react-native';
+
+import { b64toBlob } from './utils/utils';
 
 const MyCamera: React.FC<{}> = () => {
   const cameraRef = useRef<Camera | null>(null);
@@ -32,7 +30,16 @@ const MyCamera: React.FC<{}> = () => {
   };
 
   const onSave = async () => {
-    console.log(photo);
+    let formData = new FormData();
+    formData.append('data', b64toBlob(photo.base64), 'photo.jpeg');
+    await fetch('/upload', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
+    }).then((res) => res.json());
   };
 
   const onBack = () => {
