@@ -15,13 +15,14 @@ const Main: React.FC<{}> = () => {
     return <Login />;
   }
   return (
-    <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{ title: 'Dashboard' }}
-      />
-      <Stack.Screen name="Camera" component={Camera} options={{ title: '' }} />
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Camera" component={Camera} />
     </Stack.Navigator>
   );
 };

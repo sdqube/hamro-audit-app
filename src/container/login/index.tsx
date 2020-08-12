@@ -1,11 +1,22 @@
 import React, { useState, useContext } from 'react';
-import { View, TextInput, Button } from 'react-native';
+import { TextInput, TouchableWithoutFeedback } from 'react-native';
 import { observer } from 'mobx-react';
+import { Layout, Input, Icon, Button } from '@ui-kitten/components';
+
 import { StoreContext } from '../../store';
+
+const AlertIcon = (props: any) => (
+  <Icon {...props} name="alert-circle-outline" />
+);
 
 const Login: React.FC<{}> = () => {
   const { auth } = useContext(StoreContext);
   const [userInfo, setUserInfo] = useState({ username: '', password: '' });
+  const [secureTextEntry, setSecureTextEntry] = React.useState(true);
+
+  const toggleSecureEntry = () => {
+    setSecureTextEntry(!secureTextEntry);
+  };
 
   const onChangeText = (key: string) => (text: string) => {
     setUserInfo((prev) => ({ ...prev, [key]: text }));
@@ -14,44 +25,45 @@ const Login: React.FC<{}> = () => {
     auth.login();
   };
 
+  const renderIcon = (props: any) => (
+    <TouchableWithoutFeedback onPress={toggleSecureEntry}>
+      <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'} />
+    </TouchableWithoutFeedback>
+  );
+
   return (
-    <View
+    <Layout
       style={{
         flex: 1,
-        display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
+        alignItems: 'center',
+        padding: 40,
       }}
     >
-      <TextInput
-        style={{
-          height: 40,
-          width: '90%',
-          borderColor: '#888',
-          borderWidth: 1,
-          padding: 8,
-          margin: 10,
-        }}
-        placeholder="Username"
-        onChangeText={onChangeText('username')}
+      <Input
         value={userInfo.username}
+        label="Username"
+        size="large"
+        onChangeText={onChangeText('username')}
       />
-      <TextInput
-        style={{
-          height: 40,
-          width: '90%',
-          margin: 10,
-          borderColor: '#888',
-          borderWidth: 1,
-          padding: 8,
-        }}
-        placeholder="Password"
-        secureTextEntry
-        onChangeText={onChangeText('password')}
+      <Input
         value={userInfo.password}
+        label="Password"
+        size="large"
+        caption="Should contain at least 8 characters"
+        accessoryRight={renderIcon}
+        captionIcon={AlertIcon}
+        secureTextEntry={secureTextEntry}
+        onChangeText={onChangeText('password')}
       />
-      <Button onPress={onSubmit} title="Login"></Button>
-    </View>
+      <Button
+        onPress={onSubmit}
+        status="primary"
+        style={{ minWidth: 200, marginTop: 20 }}
+      >
+        Login
+      </Button>
+    </Layout>
   );
 };
 
