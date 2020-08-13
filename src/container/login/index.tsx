@@ -1,7 +1,19 @@
 import React, { useState, useContext } from 'react';
-import { TextInput, TouchableWithoutFeedback } from 'react-native';
+import {
+  StyleSheet,
+  TouchableWithoutFeedback,
+  SafeAreaView,
+  StatusBar,
+} from 'react-native';
 import { observer } from 'mobx-react';
-import { Layout, Input, Icon, Button } from '@ui-kitten/components';
+import {
+  Layout,
+  Input,
+  Text,
+  Icon,
+  Button,
+  TopNavigation,
+} from '@ui-kitten/components';
 
 import { StoreContext } from '../../store';
 
@@ -31,40 +43,81 @@ const Login: React.FC<{}> = () => {
     </TouchableWithoutFeedback>
   );
 
+  const renderTitle = (props: any) => {
+    return (
+      <Layout style={styles.titleContainer}>
+        <Text {...props} category="h2" style={styles.title}>
+          Login
+        </Text>
+      </Layout>
+    );
+  };
+
   return (
-    <Layout
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 40,
-      }}
-    >
-      <Input
-        value={userInfo.username}
-        label="Username"
-        size="large"
-        onChangeText={onChangeText('username')}
+    <SafeAreaView style={styles.areaContainer}>
+      <Layout style={styles.container}>
+        <Input
+          value={userInfo.username}
+          label="Username"
+          size="large"
+          onChangeText={onChangeText('username')}
+        />
+        <Input
+          value={userInfo.password}
+          label="Password"
+          size="large"
+          caption="Should contain at least 8 characters"
+          accessoryRight={renderIcon}
+          captionIcon={AlertIcon}
+          secureTextEntry={secureTextEntry}
+          onChangeText={onChangeText('password')}
+        />
+        <Button onPress={onSubmit} status="primary" style={styles.button}>
+          Login
+        </Button>
+      </Layout>
+      <TopNavigation
+        title={renderTitle}
+        alignment="center"
+        style={styles.topNavigation}
       />
-      <Input
-        value={userInfo.password}
-        label="Password"
-        size="large"
-        caption="Should contain at least 8 characters"
-        accessoryRight={renderIcon}
-        captionIcon={AlertIcon}
-        secureTextEntry={secureTextEntry}
-        onChangeText={onChangeText('password')}
-      />
-      <Button
-        onPress={onSubmit}
-        status="primary"
-        style={{ minWidth: 200, marginTop: 20 }}
-      >
-        Login
-      </Button>
-    </Layout>
+    </SafeAreaView>
   );
 };
 
 export default observer(Login);
+
+const styles = StyleSheet.create({
+  titleContainer: { backgroundColor: 'transparent' },
+  title: { color: '#ffffff' },
+  areaContainer: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+    flexDirection: 'column-reverse',
+    padding: 10,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    padding: 40,
+    paddingTop: 80,
+    marginTop: -30,
+    backgroundColor: '#f0f2f6',
+    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: 30,
+  },
+  topNavigation: {
+    height: 300,
+    zIndex: 10,
+    backgroundColor: '#7b60db',
+    borderTopLeftRadius: 30,
+    borderBottomLeftRadius: 30,
+    borderTopRightRadius: 30,
+  },
+  button: {
+    minWidth: 200,
+    marginTop: 20,
+    backgroundColor: '#705dd4',
+    borderWidth: 0,
+  },
+});
