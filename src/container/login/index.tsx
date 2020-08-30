@@ -18,7 +18,7 @@ import {
 import { StoreContext } from '../../store';
 
 const AlertIcon = (props: any) => (
-  <Icon {...props} name="alert-circle-outline" />
+  <Icon {...props} name='alert-circle-outline' />
 );
 
 const Login: React.FC<{}> = () => {
@@ -34,7 +34,7 @@ const Login: React.FC<{}> = () => {
     setUserInfo((prev) => ({ ...prev, [key]: text }));
   };
   const onSubmit = () => {
-    auth.login();
+    auth.login(userInfo);
   };
 
   const renderIcon = (props: any) => (
@@ -46,7 +46,7 @@ const Login: React.FC<{}> = () => {
   const renderTitle = (props: any) => {
     return (
       <Layout style={styles.titleContainer}>
-        <Text {...props} category="h2" style={styles.title}>
+        <Text {...props} category='h2' style={styles.title}>
           Login
         </Text>
       </Layout>
@@ -58,27 +58,27 @@ const Login: React.FC<{}> = () => {
       <Layout style={styles.container}>
         <Input
           value={userInfo.username}
-          label="Username"
-          size="large"
+          label='Username'
+          size='large'
           onChangeText={onChangeText('username')}
         />
         <Input
           value={userInfo.password}
-          label="Password"
-          size="large"
-          caption="Should contain at least 8 characters"
+          label='Password'
+          size='large'
+          caption='Should contain at least 8 characters'
           accessoryRight={renderIcon}
           captionIcon={AlertIcon}
           secureTextEntry={secureTextEntry}
           onChangeText={onChangeText('password')}
         />
-        <Button onPress={onSubmit} status="primary" style={styles.button}>
+        <Button onPress={onSubmit} status='primary' style={styles.button}>
           Login
         </Button>
       </Layout>
       <TopNavigation
         title={renderTitle}
-        alignment="center"
+        alignment='center'
         style={styles.topNavigation}
       />
     </SafeAreaView>

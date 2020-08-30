@@ -16,12 +16,16 @@ const Home: React.FC<any> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <TopNavigation title="Dashboard" alignment="center" />
+      <TopNavigation
+        title='Dashboard'
+        alignment='center'
+        style={styles.titleContainer}
+      />
       <Divider />
       <Layout
         style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
       >
-        <Text category="h3">Select your bill type to upload.</Text>
+        <Text category='h3'>Select your bill type to upload.</Text>
         <Layout
           style={{
             margin: 20,
@@ -31,14 +35,14 @@ const Home: React.FC<any> = ({ navigation }) => {
         >
           <Button
             style={styles.button}
-            status="success"
+            status='success'
             onPress={navigateToCamera}
           >
             Purchase
           </Button>
           <Button
             style={styles.button}
-            status="warning"
+            status='warning'
             onPress={navigateToCamera}
           >
             Sell
@@ -52,6 +56,9 @@ const Home: React.FC<any> = ({ navigation }) => {
 export default observer(Home);
 
 const styles = StyleSheet.create({
+  titleContainer: {
+    height: 80,
+  },
   button: {
     margin: 10,
     flex: 1,
