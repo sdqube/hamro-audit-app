@@ -1,6 +1,11 @@
-import { setAccessToken, getAccessToken } from './../../utils/auth';
-import { post } from './../../apis/index';
+import {
+  setAccessToken,
+  getAccessToken,
+  deleteAccessToken,
+} from './../../utils/auth';
+import { post } from './../../apis';
 import { observable, action, flow, runInAction } from 'mobx';
+import UserStore from '../user';
 
 class AuthStore {
   @observable
@@ -27,10 +32,16 @@ class AuthStore {
   login = flow(function* (this: AuthStore, userInfo: any) {
     const result = yield post('/auth/login', userInfo);
     if (result) {
-      setAccessToken(result.token);
+      setAccessToken(result.accessToken);
       this.isAuthenticated = true;
     }
   });
+
+  @action
+  logout = () => {
+    deleteAccessToken();
+    this.isAuthenticated = false;
+  };
 }
 
 export default new AuthStore();
