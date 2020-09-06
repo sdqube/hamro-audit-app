@@ -1,6 +1,5 @@
+import { getAccessToken } from './../utils/auth';
 import { HOST_API } from 'react-native-dotenv';
-
-import store from '../store';
 
 interface optionProps {
   signal?: AbortSignal;
@@ -25,7 +24,7 @@ const apiRequest = async ({
   let headers: any = {
     'accept-language': 'es',
     Accept: 'application/json',
-    authorization: store.auth.accessToken,
+    authorization: `Bearer ${await getAccessToken()}`,
   };
   if (!options?.noContentType) {
     headers['Content-Type'] = options?.contentType || 'application/json';

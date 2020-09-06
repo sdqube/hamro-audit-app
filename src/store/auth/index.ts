@@ -23,6 +23,7 @@ class AuthStore {
         runInAction(() => {
           this.isAuthenticated = true;
           this.accessToken = token;
+          console.log(token);
         });
       }
     });

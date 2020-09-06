@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { observer } from 'mobx-react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import {
@@ -8,8 +8,17 @@ import {
   Button,
   Text,
 } from '@ui-kitten/components';
+import { StoreContext } from '../../store';
 
 const Home: React.FC<any> = ({ navigation }) => {
+  const { user } = useContext(StoreContext);
+
+  useEffect(() => {
+    if (!user.isFetched) {
+      user.fetchUser();
+    }
+  }, []);
+
   const navigateToCamera = () => {
     navigation.navigate('Camera');
   };
